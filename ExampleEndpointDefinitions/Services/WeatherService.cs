@@ -2,13 +2,20 @@
 
 namespace ExampleEndpointDefinitions.Services;
 
-public class WeatherService:IWeatherService
+public class WeatherService : IWeatherService
 {
     string[] summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-    
+
+    private ILogger<WeatherService> _logger;
+
+    public WeatherService(ILogger<WeatherService> logger)
+    {
+        _logger = logger;
+    }
+
     public WeatherForecast[] GetWeatherForecast()
     {
         var forecast = Enumerable.Range(1, 5).Select(index =>
@@ -19,6 +26,7 @@ public class WeatherService:IWeatherService
                     summaries[Random.Shared.Next(summaries.Length)]
                 ))
             .ToArray();
+       
         return forecast;
     }
 }
